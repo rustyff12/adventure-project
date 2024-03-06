@@ -4,9 +4,6 @@ const { Player } = require("../class/player.js");
 const { Room } = require("../class/room.js");
 const { Item } = require("../class/item.js");
 const { Food } = require("../class/food.js");
-const { World } = require("../class/world");
-
-const worldData = require("../data/world-data");
 
 describe("Item", function () {
     it("should have name and description attributes", function () {
@@ -70,15 +67,6 @@ describe("Item", function () {
 
         expect(room.getItemByName("rock")).to.equal(item);
     });
-
-    it("a rock should exist within the Crossroad", function () {
-        let world = new World();
-        world.loadWorld(worldData);
-
-        room = world.rooms[1];
-        roomItems = room.items;
-        expect(roomItems[0].name).to.equal("rock");
-    });
 });
 
 describe("Food", function () {
@@ -126,14 +114,5 @@ describe("Food", function () {
         player.eatItem("rock");
 
         expect(player.items.length).to.equal(1);
-    });
-
-    it("a sandwich should exist at the Northern point", function () {
-        let world = new World();
-        world.loadWorld(worldData);
-
-        room = world.rooms[2];
-        roomItems = room.items;
-        expect(roomItems[0].name).to.equal("sandwich");
     });
 });

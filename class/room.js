@@ -6,6 +6,11 @@ class Room {
         this.items = [];
     }
 
+    getEnemies() {
+        const { World } = require("./world");
+        return World.getEnemiesInRoom(this);
+    }
+
     printRoom() {
         console.clear();
         console.log("");
@@ -13,6 +18,13 @@ class Room {
         console.log("");
         console.log(this.description);
         console.log("");
+        if (this.getEnemies().length > 0) {
+            console.log(
+                `Enemies: ${this.getEnemies()
+                    .map((enemy) => enemy.name)
+                    .join(", ")}`
+            );
+        }
         if (this.items.length > 0) {
             console.log(
                 `Items: ${this.items.map((item) => item.name).join(", ")}`
@@ -45,20 +57,25 @@ class Room {
 
     getItemByName(name) {
         for (let i = 0; i < this.items.length; i++) {
-            const element = this.items[i].name;
-            if (element === name) {
+            const itemToCheck = this.items[i].name;
+            if (name === itemToCheck) {
                 return this.items[i];
             }
         }
     }
-}
 
+    getEnemyByName(name) {
+        let foundEnemy = null;
+        let enimies = this.getEnemies();
+        for (let i = 0; i < enimies.length; i++) {
+            if (enimies[i].name === name) {
+                foundEnemy = enimies[i];
+                break;
+            }
+        }
+        return foundEnemy;
+    }
+}
 module.exports = {
     Room,
 };
-// const testRoom = new Room("Test room", "just a simple room");
-// // console.log(testRoom);
-// console.log(testRoom.name);
-// console.log(testRoom.description);
-// testRoom.printRoom();
-// console.log(testRoom.getItemByName("rock"));
